@@ -52,3 +52,545 @@
     
 </body>
 </html>
+
+
+
+// Binary Search using Recursive function
+/*
+#include<stdio.h>
+int binsrch(int a[],int i, int l, int x)
+{
+    if(i==l)
+    {
+        if(x==a[i])
+        return i;
+        else
+        return 0;
+    }
+    else{
+        int mid=(i+l)/2;
+        if(x==a[mid])
+        {
+            return mid;
+        }
+        else if(x<a[mid])
+        {
+            return binsrch(a,i,mid-1,x);
+        }
+        else
+        {
+            return binsrch(a,mid+1,l,x);
+        }
+    }
+    
+}
+
+int main()
+{
+    int n,i,x;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    int a[n];
+    printf("Enter the array elements : ");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Enter the value of x :");
+    scanf("%d",&x);
+
+    int b=binsrch(a,1,n,x);
+
+    if(b>0)
+    {
+        printf("%d is finded in this array and its index number is %d",x,b);
+    }
+    else
+    {
+        printf("%d is Not found",x);
+    }
+
+    return 0;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+//MaxMin
+/*
+#include<stdio.h>
+int a[100], max,min;
+
+void maxmin(int i, int j)
+{
+    if(i==j)
+    {
+        max=a[i];
+        min=a[i];
+    }
+    else if(i==j-1)
+    {
+        if(a[i]>a[j])
+        {
+            max=a[i];
+            min=a[j];
+        }
+        else{
+            max=a[j];
+            min=a[i];
+        }
+    }
+    else{
+        int mid=(i+j)/2;
+        maxmin(i,mid);
+        int max1=max;
+        int min1=min;
+        maxmin(mid+1,j);
+
+        if(max1>max)
+        max=max1;
+        if(min1<min)
+        min=min1;
+    }
+}
+
+int main()
+{
+    int n,i;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    printf("Enter the array elements : ");
+    for ( i = 1; i <= n; i++)
+    {
+        scanf("%d",&a[i]);
+    }
+
+    maxmin(1,n);
+
+    printf("MAX : %d and MIN : %d",max,min);
+    
+    return 0;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+//Merge Sort
+/*
+#include<stdio.h>
+int a[100], b[100];
+
+void merge(int low, int mid, int high)
+{
+    int h=low, i=low, j=mid+1;
+    while(h<=mid && j<=high)
+    {
+        if(a[h]<a[j])
+        {
+            b[i]=a[h];
+            h++;
+        }
+        else{
+            b[i]=a[j];
+            j++;
+        }
+        i++;
+    }
+    if(h>mid)
+    {
+        for(int k=j; k<=high; k++)
+        {
+            b[i]=a[k];
+            i++;
+        }
+    }
+    else
+    {
+        for(int k=h; k<=mid; k++)
+        {
+            b[i]=a[k];
+            i++;
+        }
+        
+    }
+    for(int k=low; k<=high; k++)
+    {
+        a[k]=b[k];
+    }
+}
+
+void mergesort(int low, int high)
+{
+    if(low<high)
+    {
+        int mid=(low+high)/2;
+        mergesort(low, mid);
+        mergesort(mid+1,high);
+        merge(low, mid, high);
+    }
+}
+
+int main()
+{
+    int i,n;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+
+    mergesort(1,n);
+
+    printf("After the Merge Sort : ");
+    for(i=1; i<=n; i++)
+    {
+        printf("%d  ",a[i]);
+    }
+
+    return 0;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+//Quick Sort
+/*
+#include<stdio.h>
+int a[100];
+
+int partition(int m, int p)
+{
+    int u=a[m], i=m, j=p;
+    do{
+        do{
+            i++;
+        } while(a[i]<u);
+
+        do{j--;}
+        while(a[j]>u);
+
+        if(i<j)
+        {
+            int tem=a[i];
+            a[i]=a[j];
+            a[j]=tem;
+        }
+    }
+    while(i<j);
+    a[m]=a[j];
+    a[j]=u;
+    return j;
+}
+
+void quicksort(int p, int q)
+{
+    if(p<q)
+    {
+        int j=partition(p,q+1);
+        quicksort(p,j-1);
+        quicksort(j+1,q);
+    }
+}
+
+int main()
+{
+    int i,n;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+
+    quicksort(1,n);
+
+    printf("After the Quick Sort : ");
+    for(i=1; i<=n; i++)
+    {
+        printf("%d  ",a[i]);
+    }
+
+    return 0;
+}
+*/
+
+
+
+
+
+
+
+
+
+//KnapSack Problem
+/*
+
+#include<stdio.h>
+float p[100],w[100];
+void knapsack(int n, int m)
+{
+    int i,j;
+    float x[n],tp=0, u=m;
+
+    for(i=1;i<=n;i++)
+    {
+        x[i]=0;
+    }
+    for(i=1;i<=n;i++)
+    {
+        if(u<w[i])
+        {
+            break;
+        }
+        else
+        {
+            x[i]=1.0;
+            tp=tp+p[i];
+            u=u-w[i];
+        }
+    }
+    if(i<=n)
+    {
+        x[i]=u/w[i];
+        tp=tp+(p[i]*x[i]);
+    }
+
+    for(i=1;i<=n;i++)
+    {
+        printf("%f ",p[i]);
+    }
+    printf("\n");
+    for(i=1;i<=n;i++)
+    {
+        printf("%.2f ",x[i]);
+    }
+printf("\n");
+    printf("Maximum profit : %.2f",tp);
+}
+
+int main()
+{
+    int i,j,n,m;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    float r[n],tem;
+    printf("Enter profit and weight : \n");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%f%f",&p[i],&w[i]);
+        r[i]=p[i]/w[i];
+    }
+    printf("Enter the value of m : ");
+    scanf("%d",&m);
+
+    for(i=1;i<=n;i++)
+    {
+        for(j=i+1;j<=n;j++)
+        {
+            if(r[i]<r[j])
+            {
+                tem=r[i];
+                r[i]=r[j];
+                r[j]=tem;
+
+                tem=p[i];
+                p[i]=p[j];
+                p[j]=tem;
+
+                tem=w[i];
+                w[i]=w[j];
+                w[j]=tem;
+            }
+        }
+    }
+
+    knapsack(n,m);
+
+    return 0;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+//Job Sequence problem
+/*
+
+#include<stdio.h>
+
+int jobsequence(int d[], int j[], int n)
+{
+    int i,k,r,q;
+    d[0]=j[0]=0;
+    j[1]=1;
+    k=1;
+    for(i=2;i<=n;i++)
+    {
+        r=k;
+        while(d[j[r]]>d[i] && d[j[r]]!=r)
+        {
+            r=r-1;
+        }
+        if(d[j[r]]<=d[i] && d[i]>r)
+        {
+            for(q=k;q>=r+1;q--)
+            {
+                j[q+1]=j[q];
+            }
+            j[r+1]=i;
+            k=k+1;
+        }
+    }
+    return k;
+}
+
+int main()
+{
+    int i,l,n,tem;
+    printf("Enter the value of n : ");
+    scanf("%d",&n);
+    int p[n], d[n], j[n];
+    printf("Enter profit : ");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%d",&p[i]);
+    }
+    printf("Enter deadlines : ");
+    for(i=1;i<=n;i++)
+    {
+        scanf("%d",&d[i]);
+    }
+
+    for(i=1;i<=n;i++)
+    {
+        for(l=i+1;l<=n;l++)
+        {
+            if(p[i]<p[l])
+            {
+                tem=p[i];
+                p[i]=p[l];
+                p[l]=tem;
+
+                tem=d[i];
+                d[i]=d[l];
+                d[l]=tem;
+            }
+        }
+    }
+
+    int k=jobsequence(d,j,n);
+    int maxprofit=0;
+    for(i=1;i<=k;i++)
+    {
+        maxprofit=maxprofit+p[i];
+    }
+    printf("Maximum profit : %d",maxprofit);
+
+    return 0;
+}
+*/
+
+
+
+
+
+
+
+
+// All Pair Shortest Path
+/*
+#include<stdio.h>
+int cost[100][100], a[100][100];
+
+void allpair(int n)
+{
+    int i,j,k;
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            a[i][j]=cost[i][j];
+        }
+    }
+
+    for(k=1;k<=n;k++)
+    {
+        for(i=1;i<=n;i++)
+        {
+            for(j=1;j<=n;j++)
+            {
+                if(a[i][j]>a[i][k]+a[k][j])
+                {
+                    a[i][j]=a[i][k]+a[k][j];
+                }
+            }
+        }
+    }
+    printf("\n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            printf("%d ",a[i][j]);
+        }
+        printf("\n");
+    }
+
+}
+
+int main()
+{
+    int i,j,n;
+    printf("Enter the number of vertes : ");
+    scanf("%d",&n);
+
+    printf("Enter the all path length : \n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&cost[i][j]);
+        }
+    }
+
+    allpair(n);
+
+
+    return 0;
+}
+
+*/
