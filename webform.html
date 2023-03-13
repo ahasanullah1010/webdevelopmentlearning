@@ -594,3 +594,399 @@ int main()
 }
 
 */
+
+
+
+
+
+
+
+
+
+// Prim's Algorithm
+
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+#define INF 9999999
+
+#define V 10
+int G[V][V] ;
+
+int main() {
+  int no_edge;
+
+  int n;
+cout<<"Enter the number of node : ";
+cin>>n;
+  for(int i =0 ;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            cin>>G[i][j];
+        }
+    }
+     int selected[n];
+  memset(selected, false, sizeof(selected));
+
+
+  no_edge = 0;
+
+
+  selected[0] = true;
+
+  int x;
+  int y;
+
+  // printing edge and weight
+  cout << "Edge"
+     << " : "
+     << "Weight";
+  cout << endl;
+  while (no_edge < n - 1) {
+    int min = INF;
+    x = 0;
+    y = 0;
+
+    for (int i = 0; i < n; i++) {
+      if (selected[i]) {
+        for (int j = 0; j < n; j++) {
+          if (!selected[j] && G[i][j]) {  // not in selected and there is an edge
+            if (min > G[i][j]) {
+              min = G[i][j];
+              x = i;
+              y = j;
+            }
+          }
+        }
+      }
+    }
+    cout << x << " - " << y << " :  " << G[x][y];
+    cout << endl;
+    selected[y] = true;
+    no_edge++;
+  }
+
+  return 0;
+}
+
+
+
+
+
+
+
+//final coloring
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int g[20][20],cnt=0,x[50],m,n,c=0;
+
+void NextValue(int k)
+{
+    while(1)
+    {
+        x[k]=(x[k]+1)%(m+1);
+        if(x[k]==0)
+            return;
+        int i;
+        for(i=1; i<=n; i++)
+        {
+            if(g[k][i]==1&& x[k]==x[i])
+                break;
+        }
+        if(i==n+1)
+            return;
+    }
+}
+
+void mColoring(int k)
+{
+    while(1)
+    {
+        NextValue(k);
+        if(x[k]==0)
+            return;
+        if(k==n)
+        {
+            c=1;
+            for(int i=1; i<=n; i++)
+            {
+                cout<<" "<<x[i];
+            }
+            cout<<endl;
+            cnt++;
+        }
+        else mColoring(k+1);
+    }
+}
+int main()
+{
+
+    cout<<"Enter the number of nodes : ";
+    cin>>n;
+    cout<<"Enter the adjacency matrix : "<<endl;
+    for(int i=1; i<=n; i++)
+    {
+        for(int j=1; j<=n; j++)
+            cin>>g[i][j];
+    }
+
+    cout<<"Possible solutins are :"<<endl;
+    for(m=1; m<=n; m++)
+    {
+        if(c==1)
+            break;
+        mColoring(1);
+    }
+    cout<<"The Chromatic number is : "<<m-1<<endl;
+    cout<<"The total number of solutions is : "<<cnt<<endl;
+
+
+    return 0;
+}
+
+
+/*graph = {0, 1, 1, 1},
+                         {1, 0, 1, 0},
+                         {1, 1, 0, 1},
+                         {1, 0, 1, 0}/*/
+
+
+// Algorithm mColoring(k)
+// {
+//     repeat
+//     {
+//         if (x[k] = 0) then return;
+//         if (k = n) then write (x[1 : n]);
+//         else mColoring(k + 1) ;
+//     } until (false);
+// }
+
+
+
+
+
+
+
+// n queen
+#include<bits/stdc++.h>
+using namespace std;
+int x[10],cnt=0;;
+bool Place(int k,int i)
+{
+    for(int j=1 ;j<k;j++)
+    {
+        if((x[j]==i) || (abs(x[j]-i)==abs(j-k)))
+            return false;
+
+    } return true;
+}
+
+void NQueens(int k,int n)
+{
+    for(int i=1 ;i<=n;i++)
+    {
+        if(Place(k,i))
+        {
+            x[k]=i;
+            if(k==n)
+            {
+                cnt++;
+                    cout<<"Solution : "<<cnt<<endl;
+                for(int a=1;a<=n;a++)
+                {
+
+                    for(int b=1;b<=n;b++)
+                    {
+                        if(x[a]==b)
+                            cout<<"  Q";
+                        else cout<<"  -";
+                    }cout<<endl;
+                }
+            }
+            else NQueens(k+1,n);
+        }
+    }
+
+
+}
+
+int main()
+{
+        cout<<"Enter the number of queen : ";
+        int n;
+        cin>>n;
+        NQueens(1,n);
+
+    return  0;
+}
+// Algorithms Nquens(K,n){
+//     for i:=1 to n do{
+//         if place(k,i) then{
+//             x[k]:=i;
+//             if(k=n) then write (x[1:n]);
+//             else Nquens(k+1,n);
+//         }
+//     }
+// }
+
+// Algorithm place(k,i){
+//     for j:=1 to k-1 do{
+//         if x[j]=i or abs(x[j]-i)= abs(j-k) then return false
+//     }
+//     return true
+// }
+
+
+
+
+
+
+
+//single source Dijkstra
+
+#include<bits/stdc++.h>
+
+using namespace std;
+#define mx 10
+int minimumDist(int n,int dist[], bool visited[])
+{
+	int min=INT_MAX,index;
+
+	for(int i=0;i<n;i++)
+	{
+		if(visited[i]==false && dist[i]<=min)
+		{
+			min=dist[i];
+			index=i;
+		}
+	}
+	return index;
+}
+
+void Dijkstra(int graph[mx][mx],int n,int src)
+{
+	int dist[mx];
+	bool visited[mx];
+	for(int i = 0; i<n; i++)
+	{
+		dist[i] = INT_MAX;
+		visited[i] = false;
+	}
+
+	dist[src] = 0;
+	for(int i = 0; i<n; i++)
+	{
+		int m=minimumDist(n,dist,visited);
+		visited[m]=true;
+		for(int i = 0; i<n; i++)
+		{
+			if(!visited[i] && graph[m][i] && dist[m]!=INT_MAX && dist[m]+graph[m][i]<dist[i])
+				dist[i]=dist[m]+graph[m][i];
+		}
+	}
+	cout<<"Vertex\t\tDistance from source"<<endl;
+	for(int i = 0; i<n; i++)
+	{
+		char str=65+i;
+		cout<<str<<"\t\t\t"<<dist[i]<<endl;
+	}
+}
+
+int main()
+{
+    int n;
+    cout<<"enter the number of vertices (maximum 10): "<<endl;
+    cin>>n;
+    int graph[mx][mx];
+    cout<<"enter the weight matrix : ";
+    for(int i =0 ;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            cin>>graph[i][j];
+        }
+    }
+    int source;
+    cout<<"Enter the source vertex : ";
+    cin>>source;
+
+	Dijkstra(graph,n,source);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+// Minimum cost spanning tree using Krushkal’s algorithm#include<stdio.h>
+    #include<bits/stdc++.h>
+    using namespace std;
+    int i, j, k, a, b, u, v, n, ne = 1;
+    int Min, Mincost = 0, cost[9][9], parent[9];
+    int find(int);
+    int uni(int, int);
+    int main()
+    {
+        printf("\n\tImplementation of Kruskal's algorithm\n");
+        printf("\nEnter the no. of vertices:");
+        scanf("%d", &n);
+        printf("\nEnter the cost adjacency matrix:\n");
+        for (i = 1; i <= n; i++)
+        {
+            for (j = 1; j <= n; j++)
+            {
+                scanf("%d", &cost[i][j]);
+                if (cost[i][j] == 0)
+                    cost[i][j] = 999;
+            }
+        }
+        printf("The edges of Minimum Cost Spanning Tree are\n");
+        while (ne < n)
+        {
+            for (i = 1, Min = 999; i <= n; i++)
+            {
+                for (j = 1; j <= n; j++)
+                {
+                    if (cost[i][j] < Min)
+                    {
+                        Min = cost[i][j];
+                        a = u = i;
+                        b = v = j;
+                    }
+                }
+            }
+            u = find(u);
+            v = find(v);
+            if (uni(u, v))
+            {
+                printf("%d edge (%d,%d) =%d\n", ne++, a, b, Min);
+                Mincost += Min;
+            }
+            cost[a][b] = cost[b][a] = 999;
+        }
+        printf("\n\tMinimum cost = %d\n", Mincost);
+        // getch();
+    }
+    int find(int i)
+    {
+        while (parent[i])
+            i = parent[i];
+        return i;
+    }
+    int uni(int i, int j)s
+    {
+        if (i != j)
+        {
+            parent[j] = i;
+            return 1;
+        }
+        return 0;
+    }
